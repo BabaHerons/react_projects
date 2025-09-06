@@ -62,6 +62,25 @@ function App() {
     }))
   }
 
+  function handleDelete(task_name:string, desc:string){
+    const updatedTodos = todos.filter((item:toDo) => !(item.task_name === task_name && item.description === desc))
+    setTodos(updatedTodos)
+  }
+
+  function updateStatus(givenTodo:toDo){
+    const updatedTodos = todos.map((item:toDo) => {
+      if (item.task_name === givenTodo.task_name && item.description === givenTodo.description){
+        // we should not use this as the reference of the object is same and hence no re-render happen for this one
+        // instead we should return the new object.
+        // item.status = true
+        // return item
+        return {...item, status:true}
+      }
+      return item
+    })
+    setTodos(updatedTodos)
+  }
+
   return (
     <>
       <div className='container m-auto '>
@@ -139,7 +158,7 @@ function App() {
                       <td className="px-6 py-4">{t.description}</td>
                       <td className="px-6 py-4">{String(t.status)}</td>
                       <td className="px-6 py-4">{t.date.toLocaleString()}</td>
-                      <td className="px-6 py-4 text-right"><a href="#" className="font-medium text-blue-600 hover:underline">Edit</a></td>
+                      <td className="px-6 py-4 text-right">{!t.status && (<span className="font-medium text-emerald-600 hover:underline hover:cursor-pointer" onClick={() => updateStatus(t)}>Mark Complete</span>)}<span className="font-medium ml-2 text-red-600 hover:underline hover:cursor-pointer" onClick={()=>handleDelete(t.task_name, t.description)}>Delete</span></td>
                     </tr>
                   ))
                 )
