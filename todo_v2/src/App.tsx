@@ -8,7 +8,7 @@ function App() {
       <ToastContainer />
       <h1>Learning integration</h1>
       <Typography variant="h1" gutterBottom>
-        h1: Learning HTML
+        Learning HTML
       </Typography>
       <h2>Learning integration</h2>
       <div>Testing notification tostr</div>
