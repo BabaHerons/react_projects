@@ -1,8 +1,18 @@
 import { ToastContainer, toast } from "react-toastify";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { todoApi } from "./api/todo/todo.api";
+import { useTodoMutations } from "./hooks/todo/useTodoMutations";
 
 function App() {
+  const get_data = async () => {
+    const data = await todoApi.getAll()
+    console.log(data)
+    toast.success("Data Fetched")
+  }
+
+  const { createTodo } = useTodoMutations()
+
   return (
     <>
       <ToastContainer />
@@ -47,6 +57,22 @@ function App() {
             onClick={() => toast.info("Something went wrong!")}
           >
             Info
+          </Button>
+        </div>
+        <div>
+          <Button
+            variant="contained"
+            onClick={get_data}
+          >
+            Get Data of TODO
+          </Button>
+        </div>
+        <div>
+          <Button
+            variant="contained"
+            onClick={() => createTodo.mutate({title:'Car wash.', completed:false})}
+          >
+            Create TODO
           </Button>
         </div>
       </div>
