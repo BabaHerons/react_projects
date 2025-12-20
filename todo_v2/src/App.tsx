@@ -1,4 +1,4 @@
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { todoApi } from "./api/todo/todo.api";
@@ -15,7 +15,6 @@ function App() {
 
   return (
     <>
-      <ToastContainer />
       <h1>Learning integration</h1>
       <Typography variant="h1" gutterBottom>
         Learning HTML
