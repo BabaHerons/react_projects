@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 // import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useTodoMutations } from "./hooks/todo/useTodoMutations";
@@ -10,8 +10,8 @@ import { useForm } from "react-hook-form";
 
 
 function App() {
-  const { createTodo } = useTodoMutations()
-  const { data: todos, isLoading, isError } = useTodos()
+  const { createTodo, updateTodo, deleteTodo } = useTodoMutations()
+  const { data: todos, isFetching, isLoading, isError } = useTodos()
 
   const { register, handleSubmit, watch, reset, formState: { errors } } = useForm<Partial<Todo>>({
     defaultValues: {
@@ -19,11 +19,10 @@ function App() {
     },
     mode: "onBlur"
   })
-  const onSubmit = (data:Partial<Todo>) => {
+  const onSubmit = async (data:Partial<Todo>) => {
     // toast.info("This is working")
     // console.log(data)
-    console.log("Errors from useForm:", errors)
-    createTodo.mutate(data)
+    await createTodo.mutateAsync(data)
     reset()
   }
 
@@ -56,9 +55,13 @@ function App() {
           })} />
           {errors.title && (<h6 className="text-red-500">{errors.title.message}</h6>)}
           {/* <Typography variant="body1" color="red" gutterBottom>Todo V2</Typography> */}
-          {/* <TextField variant="outlined" label="Description" {...register("description")}></TextField> */}
+          {/* <TextField variant="outlined" label="Description" {...reg<button type="submit" className="btn btn-soft" disabled><span className="loading loading-spinner"></span>Loading</button>ister("description")}></TextField> */}
         </div>
-        <div><button type="submit" className="btn btn-soft">Create Todo</button></div>
+        {/* <div> */}
+          <button type="submit" className="btn btn-soft" disabled={createTodo.isPending}>
+            {createTodo.isPending ? (<><span className="loading loading-spinner"></span>Loading</>): ("Create Todo")}
+          </button>
+        {/* </div> */}
         {/* <div>
           <Button
             type="submit"
@@ -75,22 +78,42 @@ function App() {
         <table>
           <thead>
             <tr>
-              <th>S.No.</th>
-              <th>ID</th>
-              <th>Title</th>
-              <th>Completed</th>
+              <th className="p-1.5">S.No.</th>
+              <th className="p-1.5">ID</th>
+              <th className="p-1.5">Title</th>
+              <th className="p-1.5">Completed</th>
+              <th className="p-1.5">Action</th>
             </tr>
           </thead>
           <tbody>
+            {isLoading && (<tr><td colSpan={8} className="text-center">Loading &nbsp;<span className="loading loading-dots"></span></td></tr>)}
+            {isFetching && !isLoading && (<tr><td colSpan={8} className="text-center">Refreshing &nbsp;<span className="loading loading-dots"></span></td></tr>)}
+            {!isFetching && !isLoading && todos?.length===0 && (<tr><td colSpan={8} className="text-center text-gray-400">No data found</td></tr>)}
             {todos?.map((todo, index) => (
-              <React.Fragment key={todo.id}>
-                <tr>
-                  <td className="p-1">{index+1}.</td>
-                  <td className="p-1">{todo.id}</td>
-                  <td className="p-1">{todo.title}</td>
-                  <td className="p-1">{String(todo.completed)}</td>
-                </tr>
-              </React.Fragment>
+              <tr>
+                <td className="p-1">{index+1}.</td>
+                <td className="p-1">{todo.id}</td>
+                <td className="p-1">{todo.title}</td>
+                <td className="p-1">{String(todo.completed)}</td>
+                <td className="p-1 flex gap-1">
+                  {!todo.completed && (
+                    <button 
+                      className="btn btn-soft btn-success" 
+                      disabled={updateTodo.isPending && updateTodo.variables?.id === todo.id} 
+                      onClick={() => updateTodo.mutate({id:todo.id, data:{completed:true}})}
+                    >
+                      {updateTodo.isPending && updateTodo.variables?.id === todo.id ? (<span className="loading loading-spinner"></span>): ("Done")}
+                    </button>
+                  )}
+                  <button 
+                    className="btn btn-soft btn-error" 
+                    disabled={deleteTodo.isPending && deleteTodo.variables?.id === todo.id}
+                    onClick={() => deleteTodo.mutate({id:todo.id})}
+                    >
+                      {deleteTodo.isPending && deleteTodo.variables?.id === todo.id ? (<span className="loading loading-spinner"></span>): ("Remove")}
+                  </button>
+                </td>
+              </tr>
             ))}
           </tbody>
         </table>
