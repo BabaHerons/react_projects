@@ -1,81 +1,101 @@
 import { toast } from "react-toastify";
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { todoApi } from "./api/todo/todo.api";
 import { useTodoMutations } from "./hooks/todo/useTodoMutations";
+import { useTodos } from "./hooks/todo/useTodos";
+import React from "react";
+// import TextField  from "@mui/material/TextField";
+import type { Todo } from "./api/todo/todo.types";
+import { useForm } from "react-hook-form";
+
 
 function App() {
-  const get_data = async () => {
-    const data = await todoApi.getAll()
-    console.log(data)
-    toast.success("Data Fetched")
+  const { createTodo } = useTodoMutations()
+  const { data: todos, isLoading, isError } = useTodos()
+
+  const { register, handleSubmit, watch, reset, formState: { errors } } = useForm<Partial<Todo>>({
+    defaultValues: {
+      completed: false
+    },
+    mode: "onBlur"
+  })
+  const onSubmit = (data:Partial<Todo>) => {
+    // toast.info("This is working")
+    // console.log(data)
+    console.log("Errors from useForm:", errors)
+    createTodo.mutate(data)
+    reset()
   }
 
-  const { createTodo } = useTodoMutations()
+  // To watch on any change on any input field we can write useEffect
+  // const title = watch("title")
+  // useEffect(() => {
+  //   console.log("Title: ", title)
+  // },[title])
+  
 
   return (
-    <>
-      <h1>Learning integration</h1>
+    <div className="flex flex-col justify-center items-center">
       <Typography variant="h1" gutterBottom>
-        Learning HTML
+        Todo V2
       </Typography>
-      <h2>Learning integration</h2>
-      <div>Testing notification tostr</div>
-      <p>
-        The RMS Titanic was a British luxury liner that famously sank on April
-        15, 1912, during its maiden voyage after hitting an iceberg, resulting
-        in the deaths of over 1,500 people due to insufficient lifeboats and
-        design flaws, cementing it as one of history's most famous maritime
-        disasters, inspiring books, films (like James Cameron's 1997 epic), and
-        new maritime safety regulations. About the Ship Size & Luxury: The
-        largest ship of its time, considered "unsinkable" due to its watertight
-        compartments and considered a marvel of modern technology and luxury.
-        Construction: Built in Belfast, Northern Ireland, by Harland & Wolff for
-        the White Star Line. Capacity: Carried over 2,200 passengers and crew on
-        its fateful trip from Southampton to New York City. This video shows
-        what the ship looked like before its tragic journey:
-      </p>
-      <div className="text-black flex gap-2 h-[100px]">
-        <Button
-          variant="contained"
-          size="small"
-          color="inherit"
-          onClick={() => toast.error("Something went wrong!")}
-        >
-          Error
-        </Button>
-        <Button
-          variant="outlined"
-          onClick={() => toast.warn("Something went wrong!")}
-        >
-          Warn
-        </Button>
-        <div>
-          <Button
-            variant="contained"
-            onClick={() => toast.info("Something went wrong!")}
-          >
-            Info
-          </Button>
+
+      <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col gap-1">
+          {/* <TextField label="Title" {...register("title", {
+            required: true,
+            // onChange: (e:React.ChangeEvent<HTMLInputElement>) => {
+            //   const { name, value } = e.target
+            //   console.log(name)
+            //   console.log(value)
+            // }
+          })}></TextField> */}
+          <label>Title</label>
+          <input className={`input ${errors.title?.message ? "input-error" : ""}`} placeholder="Enter here" {...register("title", {
+            required: "Title cannot be blank"
+          })} />
+          {errors.title && (<h6 className="text-red-500">{errors.title.message}</h6>)}
+          {/* <Typography variant="body1" color="red" gutterBottom>Todo V2</Typography> */}
+          {/* <TextField variant="outlined" label="Description" {...register("description")}></TextField> */}
         </div>
-        <div>
+        <div><button type="submit" className="btn btn-soft">Create Todo</button></div>
+        {/* <div>
           <Button
+            type="submit"
             variant="contained"
-            onClick={get_data}
-          >
-            Get Data of TODO
-          </Button>
-        </div>
-        <div>
-          <Button
-            variant="contained"
-            onClick={() => createTodo.mutate({title:'Car wash.', completed:false})}
           >
             Create TODO
           </Button>
-        </div>
+        </div> */}
+      </form>
+      <br />
+
+      {/* Table to display the TODOS */}
+      <div className="flex items-center justify-center">
+        <table>
+          <thead>
+            <tr>
+              <th>S.No.</th>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Completed</th>
+            </tr>
+          </thead>
+          <tbody>
+            {todos?.map((todo, index) => (
+              <React.Fragment key={todo.id}>
+                <tr>
+                  <td className="p-1">{index+1}.</td>
+                  <td className="p-1">{todo.id}</td>
+                  <td className="p-1">{todo.title}</td>
+                  <td className="p-1">{String(todo.completed)}</td>
+                </tr>
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
       </div>
-    </>
+    </div>
   );
 }
 

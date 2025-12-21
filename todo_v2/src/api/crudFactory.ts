@@ -12,17 +12,17 @@ export const crudFactory = <T>(axios: AxiosInstance, endpoint:string) => ({
         return data
     },
 
-    post: async (payload: Partial<T>): Promise<Partial<T>> => {
+    create: async (payload: Partial<T>): Promise<Partial<T>> => {
         const { data } = await axios.post<T>(endpoint, payload)
         return data
     },
 
-    patch: async (id:number, payload: Partial<T>): Promise<T> => {
+    update: async (id:number, payload: Partial<T>): Promise<T> => {
         const { data } = await axios.patch<T>(`${endpoint}/${id}`, payload)
         return data
     },
 
-    delete: async (id:number): Promise<void> => {
+    remove: async (id:number): Promise<void> => {
         await axios.delete(`${endpoint}/${id}`)
     }
 })

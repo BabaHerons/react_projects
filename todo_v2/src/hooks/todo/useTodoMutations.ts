@@ -15,7 +15,7 @@ export const useTodoMutations = () => {
     }
 
     const createTodo = useMutation({
-        mutationFn: todoApi.post,
+        mutationFn: todoApi.create,
         onSuccess: (data) => {
             successMsg('POST', data, "Todo added successfully.")
             // queryClient.invalidateQueries({ queryKey: ['todos'] })
@@ -30,7 +30,7 @@ export const useTodoMutations = () => {
     })
 
     const updateTodo = useMutation({
-        mutationFn: ({ id, data }:{ id:number, data:any }) => todoApi.patch(id, data),
+        mutationFn: ({ id, data }:{ id:number, data:any }) => todoApi.update(id, data),
         onSuccess: (data) => {
             successMsg("PATCH", data, "Todo updated successfully.")
         },
@@ -40,7 +40,7 @@ export const useTodoMutations = () => {
     })
 
     const deleteTodo = useMutation({
-        mutationFn: ({ id }: {id:number}) => todoApi.delete(id),
+        mutationFn: ({ id }: {id:number}) => todoApi.remove(id),
         onSuccess: (data) => {
             successMsg("DELETE", data, "Todo deleted successfully.")
         },
