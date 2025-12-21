@@ -1,73 +1,231 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Todo V2 📝
 
-Currently, two official plugins are available:
+A scalable, type-safe Todo application built with **React 19**, **TypeScript**, and **TanStack Query**, showcasing clean architecture, reusable patterns, and a clear evolution path toward a full **PERN stack**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project focuses on **how** an application is structured rather than just **what** it does.
 
-## React Compiler
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+## 🚀 Features
 
-## Expanding the ESLint configuration
+- ✅ Create, update, and delete todos
+- 🔄 Real-time UI sync using TanStack Query
+- ⚡ Optimistic UI behavior with cache invalidation
+- 🧩 Generic CRUD factory for scalable APIs
+- 🧪 Artificial API delay for realistic UX testing
+- 📝 Form validation using React Hook Form (`onBlur`)
+- 🔔 Toast notifications for user feedback
+- 🎨 Minimal, customizable UI with DaisyUI + Tailwind
+- 📦 Feature-based folder structure
+- 🔒 Type-safe APIs with shared domain models
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🛠️ Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Frontend
+- **React 19**
+- **TypeScript**
+- **Vite**
+- **Tailwind CSS**
+- **DaisyUI**
+- **Material UI (Typography)**
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### State & Data
+- **@tanstack/react-query v5**
+- **Axios**
+- **React Hook Form**
+
+### Backend (Mock)
+- **json-server**
+
+
+## 📁 Folder Structure
+
+```txt
+src
+├── api
+│   ├── axiosInstance.ts      # Axios global configuration
+│   ├── crudFactory.ts        # Generic CRUD abstraction
+│   └── todo
+│       ├── todo.api.ts       # Todo API implementation
+│       └── todo.types.ts     # Shared domain types
+│
+├── hooks
+│   ├── todo
+│   │   ├── useTodos.ts           # Read todos
+│   │   └── useTodoMutations.ts   # Create / Update / Delete
+│
+├── providers
+│   └── QueryProvider.tsx     # React Query global config
+│
+├── App.tsx                   # UI + interactions
+└── main.tsx                  # App entry point
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🧠 Architecture Highlights
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 1️⃣ Generic CRUD Factory Pattern
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Instead of rewriting API logic for every feature, this project uses a **generic CRUD factory**:
+
+```ts
+export const crudFactory = <T>(axios, endpoint) => ({
+  getAll: () => axios.get(endpoint),
+  create: (payload) => axios.post(endpoint, payload),
+  update: (id, payload) => axios.patch(`${endpoint}/${id}`, payload),
+  remove: (id) => axios.delete(`${endpoint}/${id}`)
+})
+
 ```
+
+✔️ Reusable  
+✔️ Scalable  
+✔️ Type-safe
+
+Adding a new feature (e.g. `users`, `projects`) becomes trivial.
+
+----------
+
+### 2️⃣ TanStack Query for Server State
+
+-   Automatic caching
+    
+-   Background refetching
+    
+-   Centralized loading & error handling
+    
+-   Query invalidation after mutations
+    
+
+```ts
+queryClient.invalidateQueries({ queryKey: ['todos'] })
+
+```
+
+This keeps UI and server state **always in sync**.
+
+----------
+
+### 3️⃣ Axios Instance with Interceptors
+
+```ts
+axios.create({
+  baseURL: "http://localhost:3000",
+  headers: { "Content-Type": "application/json" }
+})
+
+```
+
+Includes an **artificial delay interceptor** to simulate real backend latency during development.
+
+----------
+
+### 4️⃣ Form Handling & Validation
+
+-   **React Hook Form**
+    
+-   Validation triggered on `onBlur`
+    
+-   Fully type-safe with shared `Todo` model
+    
+
+```ts
+register("title", { required: "Title cannot be blank" })
+
+```
+
+
+## ▶️ Running the Project
+
+### Install dependencies
+
+```bash
+npm install
+
+```
+
+### Start frontend
+
+```bash
+npm run dev
+
+```
+
+### Start mock backend
+
+```bash
+npm run server
+
+```
+
+Frontend runs on:
+
+```
+http://localhost:4200
+
+```
+
+Backend runs on:
+
+```
+http://localhost:3000
+
+```
+
+----------
+
+## 🧪 API Example (json-server)
+
+```json
+{
+  "todo": [
+    {
+      "id": 1,
+      "title": "Learn React Query",
+      "completed": false
+    }
+  ]
+}
+
+```
+
+## 🛣️ Roadmap
+
+### 🔹 V3 (Planned)
+
+-   React Router
+-   Authentication & user-based todos
+-   Global hook factory
+-   Protected routes
+    
+
+### 🔹 V4 (Planned)
+
+-   Express + PostgreSQL
+    
+-   JWT authentication
+    
+-   Full PERN stack
+    
+-   Production-ready backend
+    
+
+
+## 💡 Why this project?
+
+This project is designed to demonstrate:
+
+-   Real-world frontend architecture
+    
+-   Scalable API patterns
+    
+-   Clean separation of concerns
+    
+-   Professional React + TypeScript practices
+    
+
+It is **not just a Todo app**, but a **foundation** for larger applications.
+
+
+## 📌 Author
+Built with ❤️ by **Manmay Singh**
