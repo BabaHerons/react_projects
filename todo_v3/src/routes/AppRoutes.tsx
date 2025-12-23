@@ -6,6 +6,8 @@ import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
 import { isAuthenticated } from "../utils/auth";
 import NotFound from "../pages/NotFound";
+import RoleProtectedRoute from "./RoleProtectedRoute";
+import AdminHome from "../pages/Admin/AdminHome";
 
 
 export default function AppRoutes() {
@@ -29,6 +31,11 @@ export default function AppRoutes() {
             {/* Protected Routes */}
             <Route element={ <ProtectedRoute /> }>
                 <Route path="/todos" element={ <Todos /> } />
+
+                {/* Admin Only Routes */}
+                <Route element={ <RoleProtectedRoute allowedRoles={['admin']}/> }>
+                    <Route path="/admin" element={ <AdminHome /> } />
+                </Route>
             </Route>
 
             {/* Not Found */}
