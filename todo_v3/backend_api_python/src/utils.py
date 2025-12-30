@@ -48,7 +48,7 @@ def hospital_db():
 
 def get_user():
     data = jwt.decode(request.headers.get('token'), secret_token_key, algorithms=['HS256'])
-    return data["user"]
+    return data["user_id"]
 
 def get_role():
     data = jwt.decode(request.headers.get('token'), secret_token_key, algorithms=['HS256'])
@@ -58,7 +58,7 @@ def current_date_time_to_id():
     now = datetime.datetime.now(timezone('Asia/Kolkata'))
     return now.strftime("%Y%m%d%H%M%S%f")
 
-def get_model_fields(model, exclude_columns=[]):
+def get_model_fields(model, exclude_columns=[], for_patch=False):
     """
     Generate a list of tuples with column names and their `nullable` property for an SQLAlchemy model.
 
@@ -70,14 +70,34 @@ def get_model_fields(model, exclude_columns=[]):
         list: A list of tuples where each tuple contains the column name and whether it's nullable.
     """
 
-    exclude_columns += ["id", "updated_by", "updated_on"]
+    if exclude_columns is None:
+        exclude_columns = []
+
+    exclude_columns = set(exclude_columns) | {
+        "id",
+        "created_at",
+        "updated_at",
+        "updated_by",
+        "updated_at",
+    }
     # Use SQLAlchemy's inspection system to get model's columns
     inspector = inspect(model)
     
     fields = []
     for column in inspector.mapper.columns:
-        if column.name not in exclude_columns:
-            fields.append((column.name, not column.nullable))
+        if column.name in exclude_columns:
+            continue
+
+        is_required = (
+            not column.nullable
+            and column.default is None
+            and column.server_default is None
+        )
+
+        if for_patch:
+            is_required = False
+
+        fields.append((column.name, is_required))
     
     return fields
 

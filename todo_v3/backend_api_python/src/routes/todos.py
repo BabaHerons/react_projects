@@ -4,19 +4,19 @@ from src.models.Todo.model import Todo
 from src.jwt import token_required
 
 class TodoResource(DynamicResource):
-    @token_required
+    @token_required()
     def get(self):
         return super().get()
 
-    @token_required
+    @token_required()
     def post(self):
         return super().post()
     
-    @token_required
+    @token_required()
     def patch(self):
         return super().patch()
     
-    @token_required
+    @token_required()
     def delete(self):
         return super().delete()
 

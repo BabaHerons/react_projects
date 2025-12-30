@@ -33,7 +33,7 @@ def token_required(allowed_roles:list=None):
 
                 session = create_session()
                 try:
-                    user = session.query(User).filter_by(username = data['username']).first()
+                    user = session.query(User).filter_by(id = data['user_id']).first()
                     if not user.is_active:
                         return {"message": "Inactive User"}, 401
                 finally:
@@ -45,9 +45,9 @@ def token_required(allowed_roles:list=None):
     return wrapper
 
 
-def create_token(username, role):
+def create_token(user_id, role):
     token = jwt.encode({
-            "username": username,
+            "user_id": user_id,
             "role":role,
             "exp": datetime.now(timezone('Asia/Kolkata')) + timedelta(days=2)
         }, SECRET_TOKEN_KEY)

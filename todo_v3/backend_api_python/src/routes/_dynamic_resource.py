@@ -26,7 +26,7 @@ class DynamicResource(Resource):
         self.model = model
         self.filter_keys = filter_keys if filter_keys else []
 
-    # @token_required()
+    @token_required()
     def get(self):
         """
         Handle dynamic GET requests with optional filtering by ID or dynamic keys.
@@ -127,7 +127,7 @@ class DynamicResource(Resource):
         finally:
             session.close()
 
-    # @token_required()
+    @token_required()
     def post(self):
         """
         Handle dynamic POST requests for creating new records.
@@ -138,27 +138,24 @@ class DynamicResource(Resource):
 
         session = create_session()
 
-        try:
-            if self.model.__name__ != "EventLogs":
-                existing_record = session.query(self.model).filter_by(**args).first()
-                if existing_record:
-                    return {"message": "Record already exists."}, 422
-            
-            # args["updated_at"] = current_date_time()
-            args["updated_by"] = get_user()
+        # try:
+        if self.model.__name__ != "EventLogs":
+            existing_record = session.query(self.model).filter_by(**args).first()
+            if existing_record:
+                return {"message": "Record already exists."}, 422
 
-            record = self.model(**args)
-            session.add(record)
-            session.commit()
+        record = self.model(**args)
+        session.add(record)
+        session.commit()
 
-            result = record.as_dict(exclude_columns=['updated_by_relationship'])
-            return {"message": "Record added successfully", "record": result}, 201
-        except Exception as e:
-            return {"message": "Something went wrong", "error": str(e)}, 500
-        finally:
-            session.close()
+        result = record.as_dict(exclude_columns=['updated_by_relationship', 'password'])
+        return {"message": "Record added successfully", "record": result}, 201
+        # except Exception as e:
+        #     return {"message": "Something went wrong", "error": str(e)}, 500
+        # finally:
+        #     session.close()
 
-    # @token_required()
+    @token_required()
     def patch(self):
         """
         Handle dynamic PATCH requests for updating existing records.
@@ -167,12 +164,9 @@ class DynamicResource(Resource):
             return {"message": "Please provide id"}, 404
 
         record_id = request.args["id"]
-        args, status_code = validate_arguments(get_model_fields(self.model))
+        args, status_code = validate_arguments(get_model_fields(self.model, for_patch=True))
         if status_code == 400:
             return args, 400
-
-        # args["updated_at"] = current_date_time()
-        args["updated_by"] = get_user()
 
         try:
             session = create_session()
@@ -195,7 +189,7 @@ class DynamicResource(Resource):
         finally:
             session.close()
 
-    # @token_required()
+    @token_required()
     def delete(self):
         """
         Handle dynamic DELETE requests for deleting records by ID.

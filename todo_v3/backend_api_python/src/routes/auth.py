@@ -22,7 +22,7 @@ class Login(Resource):
         if fernet.decrypt(user.password).decode() != args["password"]:
             return {"message": "Invalid username or password"}, 404
 
-        token = create_token(user.username, user.role)
+        token = create_token(user.id, user.role)
         data = {"token":token, "user":user.as_dict(exclude_columns=['password'])}
        
         session.close()
