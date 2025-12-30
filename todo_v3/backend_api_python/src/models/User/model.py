@@ -1,6 +1,11 @@
 from src.models import base
-from sqlalchemy import Column, Integer, String, Boolean, DateTime
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, Enum
 from src.utils import current_date_time
+import enum
+
+class UserRole(enum.Enum):
+    admin = "admin"
+    user = "user"
 
 class User(base):
     __tablename__ = "users"
@@ -11,8 +16,8 @@ class User(base):
     email = Column(String(150), nullable=False, unique=True)
     mob = Column(String(100), nullable=False, unique=True)
     address = Column(String(250), nullable=True)
-    role = Column(String(200), nullable=False)
-    is_active = Column(Boolean, nullable=False)
+    role = Column(String(200), nullable=False, default='user')
+    is_active = Column(Boolean, nullable=False, default=True)
 
     # LOGS
     created_at = Column(DateTime(), nullable=False, default=current_date_time)

@@ -26,7 +26,7 @@ class DynamicResource(Resource):
         self.model = model
         self.filter_keys = filter_keys if filter_keys else []
 
-    @token_required()
+    # @token_required()
     def get(self):
         """
         Handle dynamic GET requests with optional filtering by ID or dynamic keys.
@@ -115,14 +115,19 @@ class DynamicResource(Resource):
             n = entries()
             k = offset()
             records = session.query(self.model).order_by(desc(self.model.updated_at)).limit(n).offset(k).all()
-            return [record.as_dict(exclude_columns=['updated_by_relationship']) for record in records], 200
+            # print("============================================")
+            # print("Query Start\n")
+            # print([record.as_dict(exclude_columns=['updated_by_relationship', 'password']) for record in records])
+            # print("\nQuery End")
+            # print("============================================\n")
+            return [record.as_dict(exclude_columns=['updated_by_relationship', 'password']) for record in records], 200
 
         except Exception as e:
             return {"message": "Something went wrong", "error": str(e)}, 500
         finally:
             session.close()
 
-    @token_required()
+    # @token_required()
     def post(self):
         """
         Handle dynamic POST requests for creating new records.
@@ -147,13 +152,13 @@ class DynamicResource(Resource):
             session.commit()
 
             result = record.as_dict(exclude_columns=['updated_by_relationship'])
-            return {"message": "Record added successfully", "record": result}
+            return {"message": "Record added successfully", "record": result}, 201
         except Exception as e:
             return {"message": "Something went wrong", "error": str(e)}, 500
         finally:
             session.close()
 
-    @token_required()
+    # @token_required()
     def patch(self):
         """
         Handle dynamic PATCH requests for updating existing records.
@@ -190,7 +195,7 @@ class DynamicResource(Resource):
         finally:
             session.close()
 
-    @token_required()
+    # @token_required()
     def delete(self):
         """
         Handle dynamic DELETE requests for deleting records by ID.

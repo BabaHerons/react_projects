@@ -1,4 +1,4 @@
-from src import base
+from src.models import base
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Text, JSON
 from sqlalchemy.orm import relationship
 from src.utils import current_date_time
