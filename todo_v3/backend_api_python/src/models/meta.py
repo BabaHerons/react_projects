@@ -3,8 +3,6 @@ from sqlalchemy.orm import class_mapper
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from src.utils import safe_datetime
 
-
-
 # Define a custom metaclass
 class BaseModelMeta(DeclarativeMeta):
     def __init__(cls, name, bases, dct):
@@ -82,3 +80,4 @@ class BaseModelMeta(DeclarativeMeta):
             setattr(cls, "as_dict", as_dict)
 
         super().__init__(name, bases, dct)
+

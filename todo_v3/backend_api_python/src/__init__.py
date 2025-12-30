@@ -4,10 +4,8 @@ from flask_cors import CORS
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import NullPool
-from sqlalchemy.ext.declarative import declarative_base
 from flask_cors import CORS
 from dotenv import load_dotenv
-from src.models_meta import BaseModelMeta
 import os
 
 
@@ -15,16 +13,10 @@ app = Flask(__name__)
 api = Api(app)
 CORS(app)
 
-# -------------------FLASK SSE (SERVER SIDE EVENTS)----------------------
-# app.register_blueprint(sse, url_prefix="/stream")
-
-
 filepath = os.path.join(os.path.abspath(os.path.dirname(__file__)), ".env")
 load_dotenv(dotenv_path=filepath)
 
 secret_token_key = os.environ.get('SECRET_TOKEN_KEY')
-
-# base = declarative_base(metaclass=BaseModelMeta)
 
 # ------------------- SESSION CREATION ---------------------
 # def create_session(db):
@@ -45,7 +37,7 @@ secret_token_key = os.environ.get('SECRET_TOKEN_KEY')
 # SERVER = os.environ.get('server')
 # drivers = [item for item in pyodbc.drivers()]
 # driver = drivers[-1]
-# DB = f"mssql+pyodbc://{USERNAME}:{PASSWORD}@{SERVER}/HRS_EPSR_100000?driver={driver}"
+# DB = f"mssql+pyodbc://{USERNAME}:{PASSWORD}@{SERVER}/name_of_default_db?driver={driver}"
 # engine = create_engine(DB)
 
 # FOR CREATING THE TABLES IN THE DB USING PYTHON IN SHELL

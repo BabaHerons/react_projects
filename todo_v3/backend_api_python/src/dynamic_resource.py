@@ -5,7 +5,7 @@ from src import create_session
 from src.jwt import token_required
 from src.utils import (
     validate_arguments,
-    current_date_time,
+    # current_date_time,
     get_user,
     entries,
     offset,
@@ -139,7 +139,7 @@ class DynamicResource(Resource):
                 if existing_record:
                     return {"message": "Record already exists."}, 422
             
-            args["updated_at"] = current_date_time()
+            # args["updated_at"] = current_date_time()
             args["updated_by"] = get_user()
 
             record = self.model(**args)
@@ -166,7 +166,7 @@ class DynamicResource(Resource):
         if status_code == 400:
             return args, 400
 
-        args["updated_at"] = current_date_time()
+        # args["updated_at"] = current_date_time()
         args["updated_by"] = get_user()
 
         try:
