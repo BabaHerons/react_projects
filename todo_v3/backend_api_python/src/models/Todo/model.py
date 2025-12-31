@@ -12,7 +12,7 @@ class Todo(base):
     completed = Column(Boolean(), nullable=False, default=False)
 
     # LOGS
-    user_id = Column(Integer(), ForeignKey("users.id"), nullable=False, default=get_user, onupdate=get_user)
+    user_id = Column(Integer(), ForeignKey("users.id"), nullable=False, onupdate=get_user)
     created_at = Column(DateTime(), nullable=False, default=current_date_time)
     updated_at = Column(DateTime(), nullable=False, default=current_date_time, onupdate=current_date_time)
 

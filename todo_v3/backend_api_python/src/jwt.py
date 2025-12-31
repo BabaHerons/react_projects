@@ -17,16 +17,9 @@ def token_required(allowed_roles:list=None):
             else:
                 return {"message":"Not Authorised."}, 401
             
-            if 'role' in request.headers:
-                role = request.headers['role']
-            else:
-                return {"message":"Prohibitted. Invalid Token."}, 401
-            
             try:
                 data = jwt.decode(token, SECRET_TOKEN_KEY, algorithms=['HS256'])
-                
-                if role != data["role"]:
-                    return {"message": "Invalid TOKEN"}, 401
+                role = data["role"]
                 
                 if (allowed_roles != None) and (role not in allowed_roles):
                     return {"message": "Not allowed."}, 403

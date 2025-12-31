@@ -1,10 +1,21 @@
-from src import api
+from src import api, fernet
 from src.routes._dynamic_resource import DynamicResource
 from src.models.User.model import User
 from src.jwt import token_required
 
 class UserResource(DynamicResource):
-    @token_required()
+    def before_create(self, args):
+        encrypted_password = fernet.encrypt(args["password"].encode())
+        args["password"] = encrypted_password
+        return args
+
+    def before_update(self, args):
+        if 'password' in args:
+            encrypted_password = fernet.encrypt(args["password"].encode())
+            args["password"] = encrypted_password
+        return args
+    
+    @token_required(["super_admin"])
     def get(self):
         return super().get()
 
