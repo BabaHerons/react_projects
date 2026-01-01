@@ -16,7 +16,7 @@ class UserResource(DynamicResource):
             args["password"] = encrypted_password
         return args
     
-    @token_required()
+    @token_required(["admin"])
     def get(self):
         return super().get()
 
