@@ -46,14 +46,6 @@ def hospital_db():
     data = jwt.decode(request.headers.get('token'), secret_token_key, algorithms=['HS256'])
     return f"HRS_EPSR_{data['hospital_id']}"
 
-def get_user():
-    data = jwt.decode(request.headers.get('token'), secret_token_key, algorithms=['HS256'])
-    return data["user_id"]
-
-def get_role():
-    data = jwt.decode(request.headers.get('token'), secret_token_key, algorithms=['HS256'])
-    return data["user_position"]
-
 def current_date_time_to_id():
     now = datetime.datetime.now(timezone('Asia/Kolkata'))
     return now.strftime("%Y%m%d%H%M%S%f")
@@ -231,3 +223,22 @@ def serialize_instance(model, visited=None, datetime_format='%b %d, %Y; %I:%M:%S
     visited.remove(model_id)  # Remove from visited to allow re-serialization if needed
     return data
 
+def log_audit(user_id, user_role, user_name, action, entity_type, entity_id, old_data=None, new_data=None):
+    from src.models.auditLogs import AuditLog
+    from src import create_session
+
+    session = create_session()
+    log = AuditLog(
+        actor_id=user_id,
+        actor_role=user_role,
+        actor_name=user_name,
+        action=action,
+        entity_id=str(entity_id),
+        entity_type=entity_type,
+        old_data=old_data,
+        new_data=new_data
+    )
+    
+    session.add(log)
+    session.commit()
+    session.close()

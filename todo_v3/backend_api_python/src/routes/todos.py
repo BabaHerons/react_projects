@@ -1,7 +1,7 @@
 from src import api
 from src.routes._dynamic_resource import DynamicResource
 from src.models.Todo.model import Todo
-from src.jwt import token_required
+from src.auth.jwt import token_required
 
 class TodoResource(DynamicResource):
     @token_required()

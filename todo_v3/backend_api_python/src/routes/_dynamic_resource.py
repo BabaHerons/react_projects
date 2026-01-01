@@ -2,17 +2,19 @@ from flask_restful import Resource
 from flask import request
 from sqlalchemy import desc
 from src import create_session
-from src.jwt import token_required
+from src.auth.jwt import token_required
 from src.utils import (
     validate_arguments,
     # current_date_time,
-    get_user,
     entries,
     offset,
     get_model_fields,
-    get_role,
+    log_audit
 )
 import datetime
+from src.policies.base import ModelPolicy
+from src.auth.actor import resolve_actor
+from flask import g
 
 
 class DynamicResource(Resource):
@@ -25,6 +27,10 @@ class DynamicResource(Resource):
         """
         self.model = model
         self.filter_keys = filter_keys if filter_keys else []
+
+    # MODEL'S POLICY
+    def get_model_policy(self, model):
+        return getattr(model, "__policy__", ModelPolicy)
 
     # 🔹 HOOK: runs before create
     def before_create(self, args: dict) -> dict:
@@ -46,6 +52,10 @@ class DynamicResource(Resource):
     def after_delete(self, record, session):
         pass
 
+    def get_actor(self):
+        use_anonymous = getattr(g, "audit_anonymous", False)
+        return resolve_actor(anonymous=use_anonymous)
+
     # @token_required()
     def get(self):
         """
@@ -64,6 +74,8 @@ class DynamicResource(Resource):
 
             # Filter by "updated_after' if provided
             if "updated_after" in request.args:
+                if not hasattr(self.model, "updated_at"):
+                    return {"message": "updated_after not supported for this resource"}, 400
                 updated_after = request.args.get("updated_after")
                 updated_after = datetime.datetime.strptime(updated_after, '%d/%m/%Y, %H:%M:%S')
                 records = session.query(self.model).filter(self.model.updated_at > updated_after).all()
@@ -78,7 +90,8 @@ class DynamicResource(Resource):
                 if not requested_columns or requested_columns == [""]:
                     return {"message": "Please specify columns in the query parameters."}, 400
 
-                if get_role() == "super_admin":
+                actor = self.get_actor()
+                if actor["role"] == "super_admin":
                     requested_columns += ["updated_by", "updated_at"]
                 else:
                     super_admin_list = ["updated_by", "updated_at"]
@@ -134,7 +147,19 @@ class DynamicResource(Resource):
             # Fetch all records with pagination if no specific filter is provided
             n = entries()
             k = offset()
-            records = session.query(self.model).order_by(desc(self.model.updated_at)).limit(n).offset(k).all()
+
+            policy = self.get_model_policy(self.model)
+
+            order_field = policy.order_by
+
+            if order_field and hasattr(self.model, order_field):
+                query = session.query(self.model).order_by(
+                    desc(getattr(self.model, order_field))
+                )
+            else:
+                query = session.query(self.model).order_by(desc(self.model.id))
+
+            records = query.limit(n).offset(k).all()
             # print("============================================")
             # print("Query Start\n")
             # print([record.as_dict(exclude_columns=['updated_by_relationship', 'password']) for record in records])
@@ -152,6 +177,12 @@ class DynamicResource(Resource):
         """
         Handle dynamic POST requests for creating new records.
         """
+
+        # CHECKING THE MODEL'S POLICY
+        policy = self.get_model_policy(self.model)
+        if policy.read_only:
+            return {"message": "Creation not allowed for this resource"}, 403
+
         args, status_code = validate_arguments(get_model_fields(self.model))
         if status_code == 400:
             return args, 400
@@ -172,6 +203,10 @@ class DynamicResource(Resource):
             session.commit()
 
             result = record.as_dict(exclude_columns=['updated_by_relationship', 'password'])
+
+            # Logs
+            actor = self.get_actor()
+            log_audit(actor["id"], actor["role"], actor["name"], "POST", self.model.__name__, result['id'], new_data=result)
             
             # 🔹 after hook
             self.after_create(record, session)
@@ -187,6 +222,12 @@ class DynamicResource(Resource):
         """
         Handle dynamic PATCH requests for updating existing records.
         """
+
+        # CHECKING THE MODEL'S POLICY
+        policy = self.get_model_policy(self.model)
+        if not policy.allow_patch:
+            return {"message": "Update not allowed for this resource"}, 403
+
         if "id" not in request.args:
             return {"message": "Please provide id"}, 404
 
@@ -213,10 +254,16 @@ class DynamicResource(Resource):
             session.add(record)
             session.commit()
 
+            updated_record = record.as_dict(exclude_columns=['updated_by_relationship'])
+
+            # Logs
+            actor = self.get_actor()
+            log_audit(actor["id"], actor["role"], actor["name"], "PATCH", self.model.__name__, record.id, old_data, updated_record)
+
             # 🔹 after hook
             self.after_update(record, old_data, session)
 
-            return {"message": "Record updated successfully"}
+            return {"message": "Record updated successfully", "reocrd": updated_record}
         except Exception as e:
             return {"message": "Something went wrong", "error": str(e)}, 500
         finally:
@@ -227,6 +274,12 @@ class DynamicResource(Resource):
         """
         Handle dynamic DELETE requests for deleting records by ID.
         """
+
+        # CHECKING THE MODEL'S POLICY
+        policy = self.get_model_policy(self.model)
+        if not policy.allow_delete:
+            return {"message": "Delete not allowed for this resource"}, 403
+        
         if "id" not in request.args:
             return {"message": "Please provide id"}, 404
 
@@ -237,9 +290,15 @@ class DynamicResource(Resource):
 
             if not record:
                 return {"message": "Record not found"}, 404
+            
+            old_data = record.as_dict(exclude_columns=['updated_by_relationship'])
 
             session.delete(record)
             session.commit()
+
+            # Logs
+            actor = self.get_actor()
+            log_audit(actor["id"], actor["role"], actor["name"], "DELETE", self.model.__name__, old_data['id'], old_data)
 
             # 🔹 after hook
             self.after_delete(record, session)

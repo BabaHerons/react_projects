@@ -2,9 +2,12 @@ from src.models import base
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Text, JSON
 from sqlalchemy.orm import relationship
 from src.utils import current_date_time
+from src.policies.audit_log import AuditLogPolicy
 
 class AuditLog(base):
     __tablename__ = 'audit_logs'
+    __policy__ = AuditLogPolicy
+
     id = Column(Integer(), primary_key=True, nullable=False)
 
     # WHO (immutable identity)

@@ -1,8 +1,8 @@
 from src import api, create_session, fernet
 from flask_restful import Resource
-from src.jwt import create_token, token_required
+from src.auth.jwt import create_token, token_required
 from src.models.User.model import User
-from src.utils import args
+from src.utils import args, log_audit
 
 
 login_args = args(["username", "password"])
@@ -22,8 +22,10 @@ class Login(Resource):
         if fernet.decrypt(user.password).decode() != args["password"]:
             return {"message": "Invalid username or password"}, 404
 
-        token = create_token(user.id, user.role)
+        token = create_token(user.id, user.role, user.name)
         data = {"token":token, "user":user.as_dict(exclude_columns=['password'])}
+
+        log_audit(user.id, user.role, user.name, "Login", "Auth", "0")
        
         session.close()
         return data

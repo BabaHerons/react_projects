@@ -38,10 +38,15 @@ def token_required(allowed_roles:list=None):
     return wrapper
 
 
-def create_token(user_id, role):
+def create_token(user_id, role, name):
     token = jwt.encode({
             "user_id": user_id,
             "role":role,
+            "name": name,
             "exp": datetime.now(timezone('Asia/Kolkata')) + timedelta(days=2)
         }, SECRET_TOKEN_KEY)
     return token
+
+def decode_token(token):
+    return jwt.decode(token, SECRET_TOKEN_KEY, algorithms=["HS256"])
+

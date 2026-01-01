@@ -81,4 +81,4 @@ def create_db():
 app.config['SECRET_KEY'] = os.environ.get("APP_SECRET_KEY")
 
 
-from src.routes import auth, users, todos
+from src.routes import auth, users, todos, audit_logs
