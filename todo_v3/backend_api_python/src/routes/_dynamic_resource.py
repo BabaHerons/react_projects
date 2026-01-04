@@ -69,7 +69,11 @@ class DynamicResource(Resource):
                 record_id = request.args.get("id")
                 record = session.query(self.model).filter_by(id=record_id).first()
                 if record:
-                    return record.as_dict(exclude_columns=['updated_by_relationship']), 200
+                    result =  record.as_dict(exclude_columns=['updated_by_relationship'])
+                    return {
+                        "message":"Record Fetched Successfully",
+                        "record":result
+                    }, 200
                 return {"message": "Something went wrong", "error": f"Record not found with id {record_id}"}, 404
 
             # Filter by "updated_after' if provided
@@ -81,7 +85,10 @@ class DynamicResource(Resource):
                 records = session.query(self.model).filter(self.model.updated_at > updated_after).all()
                 result = [record.as_dict(exclude_columns=['updated_by_relationship']) for record in records]
                 if result:
-                    return result
+                    return {
+                        "message":"Records Fetched Successfully",
+                        "records":result
+                    }, 200
                 return [], 200
             
             # Handle args=all for specific columns
@@ -106,7 +113,10 @@ class DynamicResource(Resource):
                     record.as_dict(include_columns=requested_columns)
                     for record in records
                 ]
-                return result, 200
+                return {
+                    "message":"Records Fetched Successfully",
+                    "records":result
+                }, 200
 
             # Filter by all matching dynamic key in the request arguments
             if "args" in request.args and request.args.get("args") == "filter":
@@ -131,8 +141,12 @@ class DynamicResource(Resource):
                 if not records:
                     return {"message": "No records found matching the filter criteria"}, 404
                     
-                return [record.as_dict(exclude_columns=['updated_by_relationship']) 
-                        for record in records], 200
+                result = [record.as_dict(exclude_columns=['updated_by_relationship']) 
+                        for record in records]
+                return {
+                    "message":"Records Fetched Successfully",
+                    "records":result
+                }, 200
 
             # Filter by the first matching dynamic key in the request arguments
             for key in self.filter_keys:
@@ -140,7 +154,11 @@ class DynamicResource(Resource):
                     filter_value = request.args.get(key)
                     records = session.query(self.model).filter_by(**{key: filter_value}).all()
                     if records:
-                        return [record.as_dict(exclude_columns=['updated_by_relationship']) for record in records], 200
+                        result =  [record.as_dict(exclude_columns=['updated_by_relationship']) for record in records]
+                        return {
+                            "message":"Records Fetched Successfully",
+                            "records":result
+                        }, 200
                     else:
                         return {"message": "Something went wrong", "error": f"No records found for {key.replace('_', ' ').title()}"}, 404
 
@@ -165,7 +183,10 @@ class DynamicResource(Resource):
             # print([record.as_dict(exclude_columns=['updated_by_relationship', 'password']) for record in records])
             # print("\nQuery End")
             # print("============================================\n")
-            return [record.as_dict(exclude_columns=['updated_by_relationship', 'password']) for record in records], 200
+            return {
+                "message": "Records fetched successfully",
+                "records": [record.as_dict(exclude_columns=['updated_by_relationship', 'password']) for record in records]
+            }, 200
 
         except Exception as e:
             return {"message": "Something went wrong", "error": str(e)}, 500

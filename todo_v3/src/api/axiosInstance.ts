@@ -1,7 +1,8 @@
 import axios from "axios"
+import { buildHeaders } from "./buildHeaders";
 
 export const axiosInstance = axios.create({
-    baseURL: "http://192.168.29.51:3000",
+    baseURL: "http://192.168.29.51:5000",
     // baseURL: "http://localhost:3000",
     headers: {
         "Content-Type": "application/json"
@@ -17,4 +18,22 @@ axiosInstance.interceptors.response.use(
   (error) => {
     return Promise.reject(error);
   }
+);
+
+/* ===============================
+   REQUEST INTERCEPTOR
+================================ */
+axiosInstance.interceptors.request.use(
+  (config:any) => {
+    const isJsonRequest =
+      ["post", "put", "patch"].includes(config.method || "");
+
+    config.headers = {
+      ...config.headers,
+      ...buildHeaders(isJsonRequest),
+    };
+
+    return config;
+  },
+  (error) => Promise.reject(error)
 );
