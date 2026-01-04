@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient} from "@tanstack/react-query";
 import type { QueryKey } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import type { ApiList, ApiSingle, ApiMessage } from "../api/apiResponse.types";
+import type { AxiosError } from "axios";
 
 
 
@@ -13,20 +14,13 @@ interface CrudApi<T> {
     remove: (id:number | string) => Promise<ApiMessage>
 }
 
-type UpdateVars<T> = {
-  id: number | string;
-  data: Partial<T>;
-};
-
 export const hookFactory = <T>(queryKey:QueryKey, api:CrudApi<T>) => {
-    const queryClient = useQueryClient();
     const uponSuccess = (request_type:string, data:any, success_msg?:string) => {
-        queryClient.invalidateQueries({ queryKey })
         if (success_msg) toast.success(success_msg)
         console.log(request_type, data)
     }
-    const uponError = (request_type:string, error:any, error_msg:string) => {
-        if (error_msg) toast.error(error_msg)
+    const uponError = (request_type:string, error:AxiosError<{message:string}>) => {
+        if (error) toast.error(error?.response?.data?.message)
         console.log(request_type, error)
     }
 
@@ -45,38 +39,50 @@ export const hookFactory = <T>(queryKey:QueryKey, api:CrudApi<T>) => {
             select: (data) => data.record
         })
     
-    const useCreate = () => 
-        useMutation<ApiSingle<T>, unknown, Partial<T>>({
+    const useCreate = () => {
+        const queryClient = useQueryClient();
+        
+        return useMutation<ApiSingle<T>, AxiosError<{message:string}>, Partial<T>>({
             mutationFn: api.create,
             onSuccess: (data) => {
+                queryClient.invalidateQueries({ queryKey });
                 uponSuccess("POST", data, data.message)
             },
-            onError: (error:any) => {
-                uponError("POST", error, error.error.message)
+            onError: (error) => {
+                uponError("POST", error)
             }
         })
+    }
 
-    const useUpdate = () => 
-        useMutation<ApiSingle<T>, unknown, UpdateVars<T>>({
-            mutationFn: ({id, data}:{id:number | string, data:Partial<T>}) => api.update(id, data),
+    const useUpdate = () => {
+        const queryClient = useQueryClient();
+        
+        return useMutation<ApiSingle<T>, AxiosError<{message:string}>, {id:number | string, data:Partial<T>}>({
+            mutationFn: ({id, data}) => api.update(id, data),
             onSuccess: (data) => {
+                queryClient.invalidateQueries({ queryKey });
                 uponSuccess("PATCH", data, data.message)
             },
-            onError: (error:any) => {
-                uponError("PATCH", error, error.error.message)
+            onError: (error) => {
+                uponError("PATCH", error)
             }
         })
+    }
 
-    const useDelete = () =>
-        useMutation<ApiMessage, unknown, number | string>({
+    const useDelete = () => {
+        const queryClient = useQueryClient();
+        
+        return useMutation<ApiMessage, AxiosError<{message:string}>, number | string>({
             mutationFn: api.remove,
             onSuccess: (data) => {
+                queryClient.invalidateQueries({ queryKey });
                 uponSuccess("PATCH", data, data.message)
             },
-            onError: (error:any) => {
-                uponError("PATCH", error, error.error.message)
+            onError: (error) => {
+                uponError("PATCH", error)
             }
         })
+    }
     
     return {
         useList,

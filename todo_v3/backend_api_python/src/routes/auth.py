@@ -4,6 +4,7 @@ from src.auth.jwt import create_token, token_required
 from src.models.User.model import User
 from src.utils import args, log_audit
 from src.auth.actor import resolve_actor
+from flask import request
 
 
 login_args = args(["username", "password"])

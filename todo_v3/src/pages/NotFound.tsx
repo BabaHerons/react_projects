@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 export default function NotFound() {
+    usePageTitle("Not Found")
     return (
         <div className="hero min-h-screen">
             <div className="hero-content text-center">
