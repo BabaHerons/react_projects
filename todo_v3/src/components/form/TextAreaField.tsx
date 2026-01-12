@@ -13,7 +13,7 @@ export function TextAreaField<T extends FieldValues>({
   register,
   errors,
   rules,
-  required,
+  show_asterisk,
   placeholder,
   rows = 4,
   className = "",
@@ -21,7 +21,7 @@ export function TextAreaField<T extends FieldValues>({
   const errorMessage = errors?.[name]?.message as string | undefined;
 
   return (
-    <FormField label={label} required={required} error={errorMessage}>
+    <FormField label={label} show_asterisk={show_asterisk} error={errorMessage}>
       <textarea
         rows={rows}
         placeholder={placeholder}

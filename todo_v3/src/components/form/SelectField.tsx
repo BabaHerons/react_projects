@@ -18,7 +18,7 @@ export function SelectField<T extends FieldValues>({
   register,
   errors,
   rules,
-  required,
+  show_asterisk,
   options,
   placeholder = "Select an option",
   className = "",
@@ -26,7 +26,7 @@ export function SelectField<T extends FieldValues>({
   const errorMessage = errors?.[name]?.message as string | undefined;
 
   return (
-    <FormField label={label} required={required} error={errorMessage}>
+    <FormField label={label} show_asterisk={show_asterisk} error={errorMessage}>
       <select
         className={`select ${errorMessage ? "select-error" : ""} ${className}`}
         {...register(name, rules)}

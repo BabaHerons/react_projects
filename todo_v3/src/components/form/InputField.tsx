@@ -13,7 +13,7 @@ export function InputField<T extends FieldValues>({
   register,
   errors,
   rules,
-  required,
+  show_asterisk,
   type = "text",
   placeholder,
   className = "",
@@ -21,7 +21,7 @@ export function InputField<T extends FieldValues>({
   const errorMessage = errors?.[name]?.message as string | undefined;
 
   return (
-    <FormField label={label} required={required} error={errorMessage}>
+    <FormField label={label} show_asterisk={show_asterisk} error={errorMessage}>
       <input
         type={type}
         placeholder={placeholder}
@@ -38,7 +38,7 @@ export function InputField<T extends FieldValues>({
     <InputField<LoginPayload>
         name='username'
         label="Username"
-        required={false}
+        show_asterisk={false}
         register={register}
         errors={errors}
         rules={{

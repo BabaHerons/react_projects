@@ -6,6 +6,6 @@ export type FormFieldProps<T extends FieldValues> = {
   register: UseFormRegister<T>;
   errors?: FieldErrors<T>;
   rules?: any;
-  required?: boolean;
+  show_asterisk?: boolean;
   className?: string;
 };

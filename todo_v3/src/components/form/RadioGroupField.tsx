@@ -17,13 +17,13 @@ export function RadioGroupField<T extends FieldValues>({
   register,
   errors,
   rules,
-  required,
+  show_asterisk,
   options,
 }: Props<T>) {
   const errorMessage = errors?.[name]?.message as string | undefined;
 
   return (
-    <FormField label={label} required={required} error={errorMessage}>
+    <FormField label={label} show_asterisk={show_asterisk} error={errorMessage}>
       <div className="flex gap-4">
         {options.map((opt) => (
           <label key={opt.value} className="label cursor-pointer gap-2">

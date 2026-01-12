@@ -52,7 +52,7 @@ export default function Login() {
           <InputField<LoginPayload>
             name='username'
             label="Username"
-            required={false}
+            show_asterisk={false}
             register={register}
             errors={errors}
             rules={{required: "Username cannot be blank"}}
@@ -63,7 +63,7 @@ export default function Login() {
           <InputField<LoginPayload>
             name='password'
             label="Password"
-            required={false}
+            show_asterisk={false}
             register={register}
             errors={errors}
             rules={{required: "Password cannot be blank"}}

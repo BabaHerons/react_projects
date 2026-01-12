@@ -2,17 +2,17 @@ import type { ReactNode } from "react";
 
 type Props = {
   label?: string;
-  required?: boolean;
+  show_asterisk?: boolean;
   error?: string;
   children: ReactNode;
 };
 
-export function FormField({ label, required, error, children }: Props) {
+export function FormField({ label, show_asterisk, error, children }: Props) {
   return (
     <div className="flex flex-col gap-1">
       {label && (
         <label className="label">
-          {label}{required && <span className="text-red-500">*</span>}
+          {label}{show_asterisk && <span className="text-red-500">*</span>}
         </label>
       )}
 
