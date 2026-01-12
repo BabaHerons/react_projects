@@ -3,7 +3,8 @@ import { useLogin } from "../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import type { LoginPayload } from "../api/auth/auth.types";
 import { InputField } from "../components/form/InputField";
-import { CheckboxField } from "../components/form/CheckboxField";
+import { Button } from "../components/ui/Button";
+import { LogIn } from "lucide-react";
 
 
 export default function Login() {
@@ -40,13 +41,13 @@ export default function Login() {
           {errors.password && (<h6 className="text-red-500">{errors.password.message}</h6>)} */}
 
           {/* LOGIN BUTTON */}
-          <button className={`btn btn-neutral mt-4 ${login.isPending ? "text-gray-500" : ""}`} disabled={login.isPending}>
+          {/* <button className={`btn btn-neutral mt-4 ${login.isPending ? "text-gray-500" : ""}`} disabled={login.isPending}>
             {
               login.isPending
               ? (<>Loading<span className="loading loading-dots"></span></>)
               : (<>Login</>)
             }
-          </button>
+          </button> */}
 
           {/* USERNAME */}
           <InputField<LoginPayload>
@@ -63,14 +64,35 @@ export default function Login() {
           <InputField<LoginPayload>
             name='password'
             label="Password"
+            type="password"
             show_asterisk={false}
             register={register}
             errors={errors}
             rules={{required: "Password cannot be blank"}}
             placeholder="Enter password"
           />
+
+          {/* LOGIN BUTTON */}
+          <Button 
+            variant="neutral"
+            isLoading={login.isPending}
+            className="mt-5"
+            icon={<LogIn />}
+            iconPosition="right"
+          >
+            Login
+          </Button>
+
+          {/* <div className="mt-20">
+            <ConfirmButton
+              onConfirm={() => {}}
+            />
+          </div> */}
+
         </fieldset>
       </form>
     </div>
   );
 }
+
+
