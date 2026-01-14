@@ -22,10 +22,16 @@ export function InputField<T extends FieldValues>({
 
   return (
     <FormField label={label} show_asterisk={show_asterisk} error={errorMessage}>
-      <input
+      {/* <input
         type={type}
         placeholder={placeholder}
         className={`input ${errorMessage ? "input-error" : ""} ${className}`}
+        {...register(name, rules)}
+      /> */}
+      <input
+        type={type}
+        placeholder={placeholder}
+        className={`input pr-4 py-3 rounded-xl border border-slate-600 focus:ring-2 focus:border-transparent outline-none transition-all ${errorMessage ? "focus:ring-red-500" : ""} ${className}`}
         {...register(name, rules)}
       />
     </FormField>

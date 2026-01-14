@@ -5,6 +5,7 @@ import type { LoginPayload } from "../api/auth/auth.types";
 import { InputField } from "../components/form/InputField";
 import { Button } from "../components/ui/Button";
 import { LogIn } from "lucide-react";
+// import { ConfirmButton } from "../components/ui/ConfirmButton";
 
 
 export default function Login() {
@@ -25,7 +26,7 @@ export default function Login() {
   return (
     <div className="flex justify-center items-center h-screen">
       <form onSubmit={handleSubmit(onsubmit)}>
-        <fieldset className="flex flex-col gap-1 bg-base-200 border-base-300 rounded-box w-xs border p-4">
+        <fieldset className="flex flex-col gap-4 bg-base-200 border-base-300 rounded-box w-xs border p-4">
           <legend className="fieldset-legend">Login</legend>
           
           {/* USERNAME */}
@@ -76,7 +77,7 @@ export default function Login() {
           <Button 
             variant="neutral"
             isLoading={login.isPending}
-            className="mt-5"
+            className="mt-2"
             icon={<LogIn />}
             iconPosition="right"
           >

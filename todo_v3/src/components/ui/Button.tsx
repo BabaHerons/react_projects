@@ -59,6 +59,20 @@ export const Button = ({
         },
         className
       )}
+      // className={clsx(
+      //   "btn",
+      //   {
+      //     "bg-indigo-600 text-white py-3.5 rounded-xl font-bold shadow-lg shadow-indigo-100 hover:bg-indigo-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2":true,
+
+      //     "btn-sm": size === "sm",
+      //     "btn-md": size === "md",
+      //     "btn-lg": size === "lg",
+
+      //     "btn-square": iconOnly,
+      //     "cursor-not-allowed text-gray-500": isLoading,
+      //   },
+      //   className
+      // )}
       disabled={disabled || isLoading}
       {...rest}
     >
