@@ -12,14 +12,19 @@ export default function Login() {
   usePageTitle("Login")
 
   const { register, handleSubmit, reset, formState: {errors} } = useForm<LoginPayload>({
-    mode: "onBlur"
+    mode: "onBlur",
   })
 
   const login = useLogin()
 
   const onsubmit = (data:LoginPayload) => {
     // console.log(data)
-    login.mutate(data)
+    login.mutate(data, {
+      onSuccess: (data) => {
+        console.log("Logging from the component", data)
+        reset() // for reseting the form upon successful form submission.
+      }
+    })
   }
 
 
