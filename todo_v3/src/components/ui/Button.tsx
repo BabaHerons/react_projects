@@ -23,6 +23,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   iconOnly?: boolean;
   ariaLabel?: string;
   children?: ReactNode;
+  loadingMsg?: string
 }
 
 
@@ -31,6 +32,7 @@ export const Button = ({
   appearance = "solid",
   size = "md",
   isLoading = false,
+  loadingMsg = 'Loading',
   icon,
   iconPosition = "left",
   iconOnly = false,
@@ -78,7 +80,7 @@ export const Button = ({
     >
       {isLoading ? (
         <>
-            {children && <span className="">Loading</span>}
+            {children && <span className="">{loadingMsg}</span>}
             <span className="loading loading-dots"></span>
         </>
       ) : iconOnly ? (
