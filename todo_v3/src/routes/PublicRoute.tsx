@@ -1,8 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { isAuthenticated } from "../utils/auth";
+import { getTokenData } from "../utils/jwt";
 
 const PublicRoute = () => {
-  if (isAuthenticated()) {
+  if (getTokenData()) {
     return <Navigate to="/" replace />;
   }
   return <Outlet />;

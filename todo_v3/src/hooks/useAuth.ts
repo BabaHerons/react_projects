@@ -4,6 +4,7 @@ import type { LoginPayload, SignupPayload } from "../api/auth/auth.types";
 import { toast } from "react-toastify";
 import type { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
+import { getTokenData } from "../utils/jwt";
 
 export const useLogin = () => {
   const navigate = useNavigate();
@@ -15,7 +16,15 @@ export const useLogin = () => {
       localStorage.setItem("user", JSON.stringify(data.user));
       toast.success("Login successfull");
       console.log(data);
-      navigate("/todos");
+      
+      const tokenData = getTokenData()
+      // console.log("Decoded Token Data:", tokenData)
+      if (tokenData?.role === 'admin'){
+        navigate("/admin")
+      }
+      else {
+        navigate("/todos");
+      }
     },
     onError: (error: AxiosError<{ message: string }>) => {
       toast.error(error?.response?.data?.message || "Login Failed");

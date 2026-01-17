@@ -1,13 +1,15 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
+import { getTokenData } from "../utils/jwt";
 
 type Props = {
   allowedRoles: Array<"admin" | "user">;
 };
 
 export default function RoleProtectedRoute({ allowedRoles }: Props) {
-  const role = "user"; // mock
+  const tokenData = getTokenData()
+  const role = tokenData?.role;
   const navigate = useNavigate();
 
   const isAllowed = role && allowedRoles.includes(role);
@@ -15,7 +17,7 @@ export default function RoleProtectedRoute({ allowedRoles }: Props) {
   useEffect(() => {
     if (!isAllowed) {
       toast.error("Not allowed to visit this page");
-      navigate("/", { replace: true });
+      navigate("/todos", { replace: true });
     }
   }, [isAllowed, navigate]);
 

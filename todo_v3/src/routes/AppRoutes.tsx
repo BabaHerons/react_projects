@@ -4,20 +4,21 @@ import Login from "../pages/auth/Login";
 import Todos from "../pages/Todos";
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
-import { isAuthenticated } from "../utils/auth";
 import NotFound from "../pages/NotFound";
 import RoleProtectedRoute from "./RoleProtectedRoute";
 import AdminHome from "../pages/Admin/AdminHome";
+import { getTokenData } from "../utils/jwt";
 
 
 export default function AppRoutes() {
+    const tokenData = getTokenData()
     return (
         <Routes>
             {/* For "/" Route */}
             <Route 
                 path="/" 
                 element={
-                    isAuthenticated()
+                    tokenData
                     ? <Navigate to="/todos" replace />
                     : <Navigate to="/login" replace />
                 }

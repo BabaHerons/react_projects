@@ -14,7 +14,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen">
+    <div className="flex flex-col justify-center items-center min-h-screen overflow-y-auto px-4">
       {authMode === 'login' 
       ? (
         <LoginForm onSwitchToSignup={toggleAuthMode}/>
