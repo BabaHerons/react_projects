@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { authApi } from "../api/auth/auth.api";
-import type { LoginPayload } from "../api/auth/auth.types";
+import type { LoginPayload, SignupPayload } from "../api/auth/auth.types";
 import { toast } from "react-toastify";
 import type { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
@@ -38,3 +38,17 @@ export const useLogout = () => {
     },
   });
 };
+
+export const useSignup = () => {
+  return useMutation({
+    mutationFn: (payload: SignupPayload) => authApi.signup(payload),
+    onSuccess: (data) => {
+      toast.success("Signup successfull");
+      console.log(data);
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toast.error(error?.response?.data?.message || "Signup Failed");
+      console.log("Signup Error", error);
+    },
+  })
+}

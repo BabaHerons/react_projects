@@ -22,10 +22,16 @@ export function TextAreaField<T extends FieldValues>({
 
   return (
     <FormField label={label} show_asterisk={show_asterisk} error={errorMessage}>
-      <textarea
+      {/* <textarea
         rows={rows}
         placeholder={placeholder}
         className={`textarea ${errorMessage ? "textarea-error" : ""} ${className}`}
+        {...register(name, rules)}
+      /> */}
+      <textarea
+        rows={rows}
+        placeholder={placeholder}
+        className={`textarea pr-4 py-3 rounded-xl border border-slate-600 focus:ring-2 focus:border-transparent outline-none transition-all ${errorMessage ? "focus:ring-red-500" : ""} ${className}`}
         {...register(name, rules)}
       />
     </FormField>

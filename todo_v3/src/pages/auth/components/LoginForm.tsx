@@ -89,7 +89,7 @@ export default function LoginForm({onSwitchToSignup}:LoginFormProps) {
           icon={<LogIn />}
           iconPosition="right"
         >
-          Login
+          Log In
         </Button>
       </fieldset>
 
