@@ -4,13 +4,14 @@ import { usePageTitle } from "../hooks/usePageTitle";
 import { getActiveUser } from "../utils/user";
 import { todoHooks } from "../hooks/todo/todo.hooks";
 import { LoadingButton } from "../components/ui/LoadingButton";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CircleCheck, Trash2 } from "lucide-react";
+import { LoadingOverlay } from "../components/ui/LoadingOverlay";
 
 export default function Todos() {
   usePageTitle("Home")
   
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<Partial<Todo>>({
+  const { register, handleSubmit, reset } = useForm<Partial<Todo>>({
     // defaultValues: {
     //   completed: false
     // },
@@ -168,7 +169,8 @@ export default function Todos() {
                 ""
               )}
               {/* {isFetching && (userTodos?.length! > 0) ? (<div className="flex items-center justify-center text-gray-600">Fetching&nbsp;<span className="loading loading-dots text-gray-600"></span></div>) :''} */}
-              {isFetching && (userTodos?.length! > 0) ? (<div className="absolute inset-0 rounded-2xl skeleton bg-gray-300/20 backdrop-blur-[2px] hover:cursor-not-allowed flex items-center justify-center z-10"></div>) :''}
+              {/* {isFetching && (userTodos?.length! > 0) ? (<LoadingOverlay><LoadingButton keepButton={false} loadingMsg=""/></LoadingOverlay>) :''} */}
+              {isFetching && (userTodos?.length! > 0) ? (<LoadingOverlay />) :''}
               {userTodos?.length === 0 && !isLoading && !isFetching ? (
                 <div className="text-center py-16 bg-white rounded-3xl border border-dashed border-slate-200">
                   <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -236,9 +238,7 @@ export default function Todos() {
                     </div>
 
                     {/* 🔥 LOADING OVERLAY */}
-                    {selectedTodo.has(todo) && (
-                      <div className="absolute inset-0 rounded-2xl skeleton bg-gray-200/20 backdrop-blur-[2px] hover:cursor-not-allowed flex items-center justify-center z-10"></div>
-                    )}
+                    {selectedTodo.has(todo) && (<LoadingOverlay isSkeleton={false}><LoadingButton keepButton={false} loadingMsg=""/></LoadingOverlay>)}
                   </div>
                 ))
               )}
