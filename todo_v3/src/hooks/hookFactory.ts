@@ -61,7 +61,7 @@ export const hookFactory = <T>(queryKey:QueryKey, api:CrudApi<T>) => {
             mutationFn: ({id, data}) => api.update(id, data),
             onSuccess: (data) => {
                 queryClient.invalidateQueries({ queryKey });
-                uponSuccess("PATCH", data, data.message)
+                uponSuccess("PATCH", data, "Updated")
             },
             onError: (error) => {
                 uponError("PATCH", error)
@@ -76,7 +76,7 @@ export const hookFactory = <T>(queryKey:QueryKey, api:CrudApi<T>) => {
             mutationFn: api.remove,
             onSuccess: (data) => {
                 queryClient.invalidateQueries({ queryKey });
-                uponSuccess("PATCH", data, data.message)
+                uponSuccess("PATCH", data, "Deleted")
             },
             onError: (error) => {
                 uponError("PATCH", error)
