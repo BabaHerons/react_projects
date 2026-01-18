@@ -5,8 +5,10 @@ import { getActiveUser } from "../utils/user";
 import { todoHooks } from "../hooks/todo/todo.hooks";
 import { LoadingButton } from "../components/ui/LoadingButton";
 import { useState } from "react";
-import { CircleCheck, Trash2 } from "lucide-react";
+import { CircleCheck, Trash2, LogOut } from "lucide-react";
 import { LoadingOverlay } from "../components/ui/LoadingOverlay";
+import { Button } from "../components/ui/Button";
+import { useLogout } from "../hooks/useAuth";
 
 export default function Todos() {
   usePageTitle("Home")
@@ -83,6 +85,11 @@ export default function Todos() {
     }
   };
 
+  const logout = useLogout()
+  const logOut = () => {
+    logout.mutate()
+  }
+
   return (
     <div className="flex flex-col items-center justify-center">
       <main className="max-w-5xl mx-auto px-4 py-8 sm:py-12">
@@ -131,6 +138,17 @@ export default function Todos() {
                     Mobile
                   </label>
                   <p className="text-slate-800 font-semibold">{user?.mob}</p>
+                </div>
+                <div>
+                  <Button 
+                    onClick={logOut}
+                    isLoading={logout.isPending}
+                    loadingMsg=""
+                    variant="error"
+                    className={`w-full ${logout.isPending ? '': 'bg-red-800 text-gray-50'}`}
+                    icon={<LogOut />}
+                    iconPosition="right"
+                  >Log Out</Button>
                 </div>
               </div>
             </div>
