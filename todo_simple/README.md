@@ -1,69 +1,135 @@
-# React + TypeScript + Vite
+![Vite](https://img.shields.io/badge/Vite-7.x-646CFF?logo=vite&logoColor=white)
+![React](https://img.shields.io/badge/React-19.x-61DAFB?logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4.x-38B2AC?logo=tailwindcss&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Journey](https://img.shields.io/badge/Todo%20Journey-v1%20→%20v4-purple)
+![Status](https://img.shields.io/badge/status-v1%20stable-blue)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🧩 todo_simple
+> The starting point of my Todo app journey.
 
-Currently, two official plugins are available:
+This folder represents the **most basic, no-frills version** of a Todo application.
+It exists to capture **where everything began** — before state management libraries, backend APIs, persistence, or complex architecture.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+If you’re browsing this repository, think of `todo_simple` as **Version 1** as starting point.
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🎯 Purpose of this Version
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+The goal of `todo_simple` is **learning by building**, focusing on:
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+* Understanding **React state management** using `useState`
+* Practicing **TypeScript interfaces**
+* Handling **form inputs** and controlled components
+* Updating UI based on state changes
+* Writing cleaner, reusable logic (small refactors included)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+No database.
+No backend.
+No external state library.
+Just React doing React things.
+
+
+## 🛠 Tech Stack
+
+* **React** (with Vite)
+* **TypeScript**
+* **Tailwind CSS**
+* **Vite** (dev server & bundler)
+
+
+## 📁 What This App Does
+
+* Add a todo with:
+
+  * Task name
+  * Description
+* Display todos in a table
+* Mark a todo as **completed**
+* Delete a todo
+* Auto-attach a timestamp when a todo is created
+* Reset the form after submission
+
+All data lives **only in memory** (page refresh = data gone).
+
+
+## 🧠 Key Learning Highlights
+
+Some intentional design & learning choices in this version:
+
+### 1. Strong typing with interfaces
+
+```ts
+interface toDo {
+  task_name: string
+  description: string
+  status: boolean
+  date: Date | string
+}
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 2. Clean state initialization
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Instead of repeating empty objects:
+
+```ts
+const makeEmptyTodo = (): toDo => ({
+  task_name: "",
+  description: "",
+  status: false,
+  date: ""
+})
 ```
+
+
+### 3. Immutable state updates
+
+Avoiding direct mutation to ensure re-renders:
+
+```ts
+return { ...item, status: true }
+```
+
+
+### 4. Controlled inputs
+
+Every input reflects state → predictable UI behavior.
+
+
+## 🚀 Running the App Locally
+
+```bash
+npm install
+npm run dev
+```
+
+The app runs on:
+
+```
+http://localhost:4200
+```
+
+
+## 🔄 What Comes Next
+
+This is **not** the final Todo app.
+
+Upcoming versions in this repository will build on this foundation:
+
+* `todo_v2` → better structure, persistence, cleaner UI
+* `todo_v3` → advanced state handling, features, scalability
+* `todo_v4` → backend, auth, real-world patterns (planned)
+
+Each folder tells a **chapter of the same story**.
+
+
+## 📝 Note
+
+This README is intentionally simple and reflective.
+It’s meant to document **progress**, not impress.
+
+If you’re reading this from the future:
+
+> *This is where it all started.*
