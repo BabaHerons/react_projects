@@ -117,6 +117,17 @@ Planned additions:
 
 Legend: ❌ Not present · ⚠️ Partial · 🧱 Design complete · ✅ Implemented
 
+## 🔀 Architecture Evolution
+
+This repository not only captures implemented versions,  
+but also documents **planned architectural transitions**.
+
+For a detailed breakdown of how **Todo V3 evolves into Todo V4** —  
+including backend stack changes, auth strategy, and deployment planning:
+
+👉 See [Todo V3 → V4 Migration Guide](./MIGRATION_V3_TO_V4.md)
+
+
 ## 🧠 Why This Repository Exists
 
 Most repositories show only the **final result**.
