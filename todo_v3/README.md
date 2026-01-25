@@ -16,6 +16,11 @@
 ![Status](https://img.shields.io/badge/status-v3%20stable-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge)](https://babaherons.in/todo-v3)
+[![API](https://img.shields.io/badge/API-Backend-blue?style=for-the-badge)](https://babaherons.in/api/todo-v3)
+[![Docs](https://img.shields.io/badge/API-Docs-orange?style=for-the-badge)](https://babaherons.in/api/todo-v3/docs)
+
+
 # Todo V3 🧠
 
 ## 📌 Overview
@@ -30,13 +35,25 @@ route protection, and reusable abstractions.
 The goal of this project is to build a **reusable foundation** that can scale
 beyond a Todo app into real-world systems.
 
+## 🔗 Live Demo & API
+
+- 🌐 **Frontend (Live App)**  
+  👉 https://babaherons.in/todo-v3
+
+- 🔌 **Backend API Base URL (used by frontend)**  
+  👉 https://babaherons.in/api/todo-v3
+
+- 📄 **API Documentation (Swagger / OpenAPI)**  
+  👉 https://babaherons.in/api/todo-v3/docs
+
+
 
 ## 🚀 Key Features
 
 ### Frontend
 - React 19 + TypeScript
 - Feature-based folder structure
-- Reusable UI components (Button, Input, Select, FormField)
+- Reusable UI components (Backend API: https://babaherons.in/api/todo-vButton, Input, Select, FormField)
 - Reusable loading & feedback components
 - Protected and public routes (React Router v7)
 - Typed API contracts and data flow
@@ -243,7 +260,7 @@ The backend exposes a generic REST API powered by `DynamicResource`,
 supporting CRUD operations, filtering, pagination, and policy enforcement.
 
 For full endpoint details, see:
-👉 [API Documentation]()
+👉 [API Documentation](https://babaherons.in/api/todo-v3/docs)
 
 
 ## ▶️ Running the Project
