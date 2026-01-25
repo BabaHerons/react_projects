@@ -9,6 +9,8 @@ import { BrowserRouter } from 'react-router-dom'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
+    {/* WHEN RUNNING 'npm run build' FOR cPANEL */}
+    {/* <BrowserRouter basename="/todo-v3"> */}
       <QueryProvider>
         <App />
         <ToastContainer />
