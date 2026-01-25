@@ -1,5 +1,3 @@
-# Todo V3 🧠
-
 ![Vite](https://img.shields.io/badge/Vite-7.x-646CFF?logo=vite&logoColor=white)
 ![React](https://img.shields.io/badge/React-19.x-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)
@@ -17,6 +15,8 @@
 ![JWT](https://img.shields.io/badge/Auth-JWT-blue)
 ![Status](https://img.shields.io/badge/status-v3%20stable-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
+
+# Todo V3 🧠
 
 ## 📌 Overview
 
