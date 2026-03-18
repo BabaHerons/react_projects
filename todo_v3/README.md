@@ -53,7 +53,7 @@ beyond a Todo app into real-world systems.
 ### Frontend
 - React 19 + TypeScript
 - Feature-based folder structure
-- Reusable UI components (Backend API: https://babaherons.in/api/todo-vButton, Input, Select, FormField)
+- Reusable UI components
 - Reusable loading & feedback components
 - Protected and public routes (React Router v7)
 - Typed API contracts and data flow

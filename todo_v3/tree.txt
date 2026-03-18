@@ -1,0 +1,152 @@
+.
+├── README.md
+├── backend_api_python
+│   ├── main.py
+│   ├── requirements.txt
+│   └── src
+│       ├── __init__.py
+│       ├── __pycache__
+│       │   ├── __init__.cpython-312.pyc
+│       │   ├── dynamic_resource.cpython-312.pyc
+│       │   ├── jwt.cpython-312.pyc
+│       │   └── utils.cpython-312.pyc
+│       ├── auth
+│       │   ├── __pycache__
+│       │   │   ├── __init__.cpython-312.pyc
+│       │   │   ├── actor.cpython-312.pyc
+│       │   │   ├── auth_mode.cpython-312.pyc
+│       │   │   └── jwt.cpython-312.pyc
+│       │   ├── actor.py
+│       │   └── jwt.py
+│       ├── database.db
+│       ├── models
+│       │   ├── Todo
+│       │   │   ├── __pycache__
+│       │   │   │   └── model.cpython-312.pyc
+│       │   │   └── model.py
+│       │   ├── User
+│       │   │   ├── __pycache__
+│       │   │   │   └── model.cpython-312.pyc
+│       │   │   └── model.py
+│       │   ├── __init__.py
+│       │   ├── __pycache__
+│       │   │   ├── __init__.cpython-312.pyc
+│       │   │   ├── auditLogs.cpython-312.pyc
+│       │   │   └── meta.cpython-312.pyc
+│       │   ├── auditLogs.py
+│       │   └── meta.py
+│       ├── policies
+│       │   ├── __pycache__
+│       │   │   ├── audit_log.cpython-312.pyc
+│       │   │   └── base.cpython-312.pyc
+│       │   ├── audit_log.py
+│       │   └── base.py
+│       ├── routes
+│       │   ├── __pycache__
+│       │   │   ├── __init__.cpython-312.pyc
+│       │   │   ├── _dynamic_resource.cpython-312.pyc
+│       │   │   ├── audit_logs.cpython-312.pyc
+│       │   │   ├── auth.cpython-312.pyc
+│       │   │   ├── todos.cpython-312.pyc
+│       │   │   └── users.cpython-312.pyc
+│       │   ├── _dynamic_resource.py
+│       │   ├── audit_logs.py
+│       │   ├── auth.py
+│       │   ├── todos.py
+│       │   └── users.py
+│       └── utils.py
+├── db.json
+├── dist
+│   ├── assets
+│   │   ├── index-C201n9ej.css
+│   │   └── index-DMlNU6eX.js
+│   ├── assets.zip
+│   ├── index.html
+│   └── vite.svg
+├── eslint.config.js
+├── index.html
+├── package-lock.json
+├── package.json
+├── public
+│   └── vite.svg
+├── src
+│   ├── App.css
+│   ├── App.tsx
+│   ├── api
+│   │   ├── apiResponse.types.ts
+│   │   ├── auditLogs
+│   │   │   ├── auditLogs.api.ts
+│   │   │   └── auditLogs.types.ts
+│   │   ├── auth
+│   │   │   ├── auth.api.ts
+│   │   │   └── auth.types.ts
+│   │   ├── axiosInstance.ts
+│   │   ├── buildHeaders.ts
+│   │   ├── crudFactory.ts
+│   │   ├── todo
+│   │   │   ├── todo.api.ts
+│   │   │   └── todo.types.ts
+│   │   └── user
+│   │       ├── user.api.ts
+│   │       └── user.types.ts
+│   ├── assets
+│   │   └── react.svg
+│   ├── components
+│   │   ├── form
+│   │   │   ├── CheckboxField.tsx
+│   │   │   ├── FormField.tsx
+│   │   │   ├── InputField.tsx
+│   │   │   ├── RadioGroupField.tsx
+│   │   │   ├── SelectField.tsx
+│   │   │   ├── TextAreaField.tsx
+│   │   │   └── types.ts
+│   │   └── ui
+│   │       ├── Button.tsx
+│   │       ├── ConfirmButton.tsx
+│   │       ├── LoadingButton.tsx
+│   │       └── LoadingOverlay.tsx
+│   ├── hooks
+│   │   ├── auditLogs
+│   │   │   └── auditLogs.hooks.ts
+│   │   ├── hookFactory.ts
+│   │   ├── todo
+│   │   │   └── todo.hooks.ts
+│   │   ├── useAuth.ts
+│   │   ├── usePageTitle.ts
+│   │   └── user
+│   │       └── user.hooks.ts
+│   ├── index.css
+│   ├── main.tsx
+│   ├── pages
+│   │   ├── Admin
+│   │   │   ├── AdminHome.tsx
+│   │   │   └── components
+│   │   │       ├── Logs.tsx
+│   │   │       ├── Todos.tsx
+│   │   │       └── Users.tsx
+│   │   ├── Dashboard.tsx
+│   │   ├── NotFound.tsx
+│   │   ├── Todos.tsx
+│   │   └── auth
+│   │       ├── Login.tsx
+│   │       └── components
+│   │           ├── LoginForm.tsx
+│   │           └── SignupForm.tsx
+│   ├── providers
+│   │   └── QueryProvider.tsx
+│   ├── routes
+│   │   ├── AppRoutes.tsx
+│   │   ├── ProtectedRoute.tsx
+│   │   ├── PublicRoute.tsx
+│   │   └── RoleProtectedRoute.tsx
+│   └── utils
+│       ├── auth.ts
+│       ├── jwt.ts
+│       └── user.ts
+├── tree.txt
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+└── vite.config.ts
+
+41 directories, 109 files
