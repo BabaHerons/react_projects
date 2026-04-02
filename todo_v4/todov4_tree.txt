@@ -1,0 +1,174 @@
+.
+├── apps
+│   ├── docs
+│   │   ├── app
+│   │   │   ├── favicon.ico
+│   │   │   ├── fonts
+│   │   │   │   ├── GeistMonoVF.woff
+│   │   │   │   └── GeistVF.woff
+│   │   │   ├── globals.css
+│   │   │   ├── layout.tsx
+│   │   │   ├── page.module.css
+│   │   │   └── page.tsx
+│   │   ├── eslint.config.js
+│   │   ├── next.config.js
+│   │   ├── next-env.d.ts
+│   │   ├── node_modules
+│   │   │   ├── eslint -> ../../../node_modules/.pnpm/eslint@9.39.1/node_modules/eslint
+│   │   │   ├── next -> ../../../node_modules/.pnpm/next@16.1.5_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/next
+│   │   │   ├── react -> ../../../node_modules/.pnpm/react@19.2.0/node_modules/react
+│   │   │   ├── react-dom -> ../../../node_modules/.pnpm/react-dom@19.2.0_react@19.2.0/node_modules/react-dom
+│   │   │   ├── @repo
+│   │   │   │   ├── eslint-config -> ../../../../packages/eslint-config
+│   │   │   │   ├── typescript-config -> ../../../../packages/typescript-config
+│   │   │   │   └── ui -> ../../../../packages/ui
+│   │   │   ├── @types
+│   │   │   │   ├── node -> ../../../../node_modules/.pnpm/@types+node@22.15.3/node_modules/@types/node
+│   │   │   │   ├── react -> ../../../../node_modules/.pnpm/@types+react@19.2.2/node_modules/@types/react
+│   │   │   │   └── react-dom -> ../../../../node_modules/.pnpm/@types+react-dom@19.2.2_@types+react@19.2.2/node_modules/@types/react-dom
+│   │   │   └── typescript -> ../../../node_modules/.pnpm/typescript@5.9.2/node_modules/typescript
+│   │   ├── package.json
+│   │   ├── public
+│   │   │   ├── file-text.svg
+│   │   │   ├── globe.svg
+│   │   │   ├── next.svg
+│   │   │   ├── turborepo-dark.svg
+│   │   │   ├── turborepo-light.svg
+│   │   │   ├── vercel.svg
+│   │   │   └── window.svg
+│   │   ├── README.md
+│   │   └── tsconfig.json
+│   └── web
+│       ├── app
+│       │   ├── admin
+│       │   │   └── page.tsx
+│       │   ├── favicon.ico
+│       │   ├── fonts
+│       │   │   ├── GeistMonoVF.woff
+│       │   │   └── GeistVF.woff
+│       │   ├── globals.css
+│       │   ├── layout.tsx
+│       │   ├── page.module.css
+│       │   └── page.tsx
+│       ├── eslint.config.js
+│       ├── next.config.js
+│       ├── next-env.d.ts
+│       ├── node_modules
+│       │   ├── eslint -> ../../../node_modules/.pnpm/eslint@9.39.1/node_modules/eslint
+│       │   ├── next -> ../../../node_modules/.pnpm/next@16.1.5_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/next
+│       │   ├── react -> ../../../node_modules/.pnpm/react@19.2.0/node_modules/react
+│       │   ├── react-dom -> ../../../node_modules/.pnpm/react-dom@19.2.0_react@19.2.0/node_modules/react-dom
+│       │   ├── @repo
+│       │   │   ├── eslint-config -> ../../../../packages/eslint-config
+│       │   │   ├── typescript-config -> ../../../../packages/typescript-config
+│       │   │   └── ui -> ../../../../packages/ui
+│       │   ├── @types
+│       │   │   ├── node -> ../../../../node_modules/.pnpm/@types+node@22.15.3/node_modules/@types/node
+│       │   │   ├── react -> ../../../../node_modules/.pnpm/@types+react@19.2.2/node_modules/@types/react
+│       │   │   └── react-dom -> ../../../../node_modules/.pnpm/@types+react-dom@19.2.2_@types+react@19.2.2/node_modules/@types/react-dom
+│       │   └── typescript -> ../../../node_modules/.pnpm/typescript@5.9.2/node_modules/typescript
+│       ├── package.json
+│       ├── public
+│       │   ├── file-text.svg
+│       │   ├── globe.svg
+│       │   ├── next.svg
+│       │   ├── turborepo-dark.svg
+│       │   ├── turborepo-light.svg
+│       │   ├── vercel.svg
+│       │   └── window.svg
+│       ├── README.md
+│       └── tsconfig.json
+├── node_modules
+│   ├── @eslint
+│   │   ├── config-array -> ../.pnpm/@eslint+config-array@0.21.1/node_modules/@eslint/config-array
+│   │   ├── config-helpers -> ../.pnpm/@eslint+config-helpers@0.4.2/node_modules/@eslint/config-helpers
+│   │   ├── core -> ../.pnpm/@eslint+core@0.17.0/node_modules/@eslint/core
+│   │   ├── eslintrc -> ../.pnpm/@eslint+eslintrc@3.3.1/node_modules/@eslint/eslintrc
+│   │   ├── js -> ../.pnpm/@eslint+js@9.39.1/node_modules/@eslint/js
+│   │   ├── object-schema -> ../.pnpm/@eslint+object-schema@2.1.7/node_modules/@eslint/object-schema
+│   │   └── plugin-kit -> ../.pnpm/@eslint+plugin-kit@0.4.1/node_modules/@eslint/plugin-kit
+│   ├── eslint -> .pnpm/eslint@9.39.1/node_modules/eslint
+│   ├── @eslint-community
+│   │   ├── eslint-utils -> ../.pnpm/@eslint-community+eslint-utils@4.9.0_eslint@9.39.1/node_modules/@eslint-community/eslint-utils
+│   │   └── regexpp -> ../.pnpm/@eslint-community+regexpp@4.12.2/node_modules/@eslint-community/regexpp
+│   ├── eslint-config-prettier -> .pnpm/eslint-config-prettier@10.1.1_eslint@9.39.1/node_modules/eslint-config-prettier
+│   ├── eslint-plugin-only-warn -> .pnpm/eslint-plugin-only-warn@1.1.0/node_modules/eslint-plugin-only-warn
+│   ├── eslint-plugin-react -> .pnpm/eslint-plugin-react@7.37.5_eslint@9.39.1/node_modules/eslint-plugin-react
+│   ├── eslint-plugin-react-hooks -> .pnpm/eslint-plugin-react-hooks@5.2.0_eslint@9.39.1/node_modules/eslint-plugin-react-hooks
+│   ├── eslint-plugin-turbo -> .pnpm/eslint-plugin-turbo@2.7.1_eslint@9.39.1_turbo@2.8.17/node_modules/eslint-plugin-turbo
+│   ├── eslint-scope -> .pnpm/eslint-scope@8.4.0/node_modules/eslint-scope
+│   ├── eslint-visitor-keys -> .pnpm/eslint-visitor-keys@4.2.1/node_modules/eslint-visitor-keys
+│   ├── @next
+│   │   └── eslint-plugin-next -> ../.pnpm/@next+eslint-plugin-next@15.5.0/node_modules/@next/eslint-plugin-next
+│   ├── prettier -> .pnpm/prettier@3.7.4/node_modules/prettier
+│   ├── @repo
+│   │   └── eslint-config -> ../../packages/eslint-config
+│   ├── turbo -> .pnpm/turbo@2.8.17/node_modules/turbo
+│   ├── typescript -> .pnpm/typescript@5.9.2/node_modules/typescript
+│   ├── @typescript-eslint
+│   │   ├── eslint-plugin -> ../.pnpm/@typescript-eslint+eslint-plugin@8.50.0_@typescript-eslint+parser@8.50.0_eslint@9.39.1_typesc_mdeotbfvm3lvz2tfho44kgleoy/node_modules/@typescript-eslint/eslint-plugin
+│   │   ├── parser -> ../.pnpm/@typescript-eslint+parser@8.50.0_eslint@9.39.1_typescript@5.9.2/node_modules/@typescript-eslint/parser
+│   │   ├── project-service -> ../.pnpm/@typescript-eslint+project-service@8.50.0_typescript@5.9.2/node_modules/@typescript-eslint/project-service
+│   │   ├── scope-manager -> ../.pnpm/@typescript-eslint+scope-manager@8.50.0/node_modules/@typescript-eslint/scope-manager
+│   │   ├── tsconfig-utils -> ../.pnpm/@typescript-eslint+tsconfig-utils@8.50.0_typescript@5.9.2/node_modules/@typescript-eslint/tsconfig-utils
+│   │   ├── types -> ../.pnpm/@typescript-eslint+types@8.50.0/node_modules/@typescript-eslint/types
+│   │   ├── typescript-estree -> ../.pnpm/@typescript-eslint+typescript-estree@8.50.0_typescript@5.9.2/node_modules/@typescript-eslint/typescript-estree
+│   │   ├── type-utils -> ../.pnpm/@typescript-eslint+type-utils@8.50.0_eslint@9.39.1_typescript@5.9.2/node_modules/@typescript-eslint/type-utils
+│   │   ├── utils -> ../.pnpm/@typescript-eslint+utils@8.50.0_eslint@9.39.1_typescript@5.9.2/node_modules/@typescript-eslint/utils
+│   │   └── visitor-keys -> ../.pnpm/@typescript-eslint+visitor-keys@8.50.0/node_modules/@typescript-eslint/visitor-keys
+│   └── typescript-eslint -> .pnpm/typescript-eslint@8.50.0_eslint@9.39.1_typescript@5.9.2/node_modules/typescript-eslint
+├── package.json
+├── packages
+│   ├── eslint-config
+│   │   ├── base.js
+│   │   ├── next.js
+│   │   ├── node_modules
+│   │   │   ├── @eslint
+│   │   │   │   └── js -> ../../../../node_modules/.pnpm/@eslint+js@9.39.1/node_modules/@eslint/js
+│   │   │   ├── eslint -> ../../../node_modules/.pnpm/eslint@9.39.1/node_modules/eslint
+│   │   │   ├── eslint-config-prettier -> ../../../node_modules/.pnpm/eslint-config-prettier@10.1.1_eslint@9.39.1/node_modules/eslint-config-prettier
+│   │   │   ├── eslint-plugin-only-warn -> ../../../node_modules/.pnpm/eslint-plugin-only-warn@1.1.0/node_modules/eslint-plugin-only-warn
+│   │   │   ├── eslint-plugin-react -> ../../../node_modules/.pnpm/eslint-plugin-react@7.37.5_eslint@9.39.1/node_modules/eslint-plugin-react
+│   │   │   ├── eslint-plugin-react-hooks -> ../../../node_modules/.pnpm/eslint-plugin-react-hooks@5.2.0_eslint@9.39.1/node_modules/eslint-plugin-react-hooks
+│   │   │   ├── eslint-plugin-turbo -> ../../../node_modules/.pnpm/eslint-plugin-turbo@2.7.1_eslint@9.39.1_turbo@2.8.17/node_modules/eslint-plugin-turbo
+│   │   │   ├── globals -> ../../../node_modules/.pnpm/globals@16.5.0/node_modules/globals
+│   │   │   ├── @next
+│   │   │   │   └── eslint-plugin-next -> ../../../../node_modules/.pnpm/@next+eslint-plugin-next@15.5.0/node_modules/@next/eslint-plugin-next
+│   │   │   ├── typescript -> ../../../node_modules/.pnpm/typescript@5.9.2/node_modules/typescript
+│   │   │   └── typescript-eslint -> ../../../node_modules/.pnpm/typescript-eslint@8.50.0_eslint@9.39.1_typescript@5.9.2/node_modules/typescript-eslint
+│   │   ├── package.json
+│   │   ├── react-internal.js
+│   │   └── README.md
+│   ├── typescript-config
+│   │   ├── base.json
+│   │   ├── nextjs.json
+│   │   ├── package.json
+│   │   └── react-library.json
+│   └── ui
+│       ├── eslint.config.mjs
+│       ├── node_modules
+│       │   ├── eslint -> ../../../node_modules/.pnpm/eslint@9.39.1/node_modules/eslint
+│       │   ├── react -> ../../../node_modules/.pnpm/react@19.2.0/node_modules/react
+│       │   ├── react-dom -> ../../../node_modules/.pnpm/react-dom@19.2.0_react@19.2.0/node_modules/react-dom
+│       │   ├── @repo
+│       │   │   ├── eslint-config -> ../../../eslint-config
+│       │   │   └── typescript-config -> ../../../typescript-config
+│       │   ├── @types
+│       │   │   ├── node -> ../../../../node_modules/.pnpm/@types+node@22.15.3/node_modules/@types/node
+│       │   │   ├── react -> ../../../../node_modules/.pnpm/@types+react@19.2.2/node_modules/@types/react
+│       │   │   └── react-dom -> ../../../../node_modules/.pnpm/@types+react-dom@19.2.2_@types+react@19.2.2/node_modules/@types/react-dom
+│       │   └── typescript -> ../../../node_modules/.pnpm/typescript@5.9.2/node_modules/typescript
+│       ├── package.json
+│       ├── src
+│       │   ├── button.tsx
+│       │   ├── card.tsx
+│       │   └── code.tsx
+│       └── tsconfig.json
+├── pnpm-lock.yaml
+├── pnpm-workspace.yaml
+├── README.md
+├── todov4_tree.txt
+├── tree.txt
+└── turbo.json
+
+109 directories, 63 files

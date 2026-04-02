@@ -27,6 +27,10 @@
   }
 }
 
+.primaryy{
+  color: aqua;
+}
+
 .main {
   display: flex;
   flex-direction: column;
